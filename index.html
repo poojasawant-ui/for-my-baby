@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For My Special One 🥺</title>
+    <style>
+        :root {
+            --rose: #ff4d6d;
+            --petal: #fff0f3;
+            --heart: #c9184a;
+        }
+
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background-color: var(--petal);
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+            text-align: center;
+        }
+
+        /* Floating Hearts Background */
+        .bg-hearts {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .card {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 30px;
+            box-shadow: 0 15px 35px rgba(255, 77, 109, 0.2);
+            width: 85%;
+            max-width: 400px;
+            transition: all 0.3s ease;
+        }
+
+        .emoji { font-size: 4rem; margin-bottom: 10px; display: block; }
+        h1 { color: var(--heart); font-size: 1.8rem; margin: 10px 0; }
+        p { color: #590d22; font-size: 1.1rem; line-height: 1.5; }
+
+        .btn-container {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            background: var(--rose);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 50px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.2s;
+            font-size: 1rem;
+        }
+
+        .btn-no {
+            background: #adb5bd;
+        }
+
+        .btn:hover { transform: scale(1.1); }
+
+        .hidden { display: none; }
+    </style>
+</head>
+<body>
+
+    <div class="bg-hearts" id="bg"></div>
+
+    <div class="card" id="card">
+        <div id="content">
+            <span class="emoji">🥰</span>
+            <h1>For my special one 🥺</h1>
+            <p>Valentine week Begin's with you 🥰</p>
+            <div class="btn-container">
+                <button class="btn" onclick="nextPage()">Start the Journey ❤️</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const pages = [
+            { e: "🌹", h: "Happy rose day 🌹", p: "A Rose for the one i ador ❤️" },
+            { e: "🫂", h: "Happy propose day 🫂❤️", p: "Every moment feels magical with you 💖" },
+            { e: "🍫", h: "Happy chocolate day 🍫", p: "Life is sweeter with you" },
+            { e: "🧸", h: "Happy teddy day 🧸", p: "Sending you warm hugs 🫂" },
+            { e: "😘", h: "Happy kiss day 😘", p: "My lips always craven for you 🥹" },
+            { e: "🫂", h: "Happy hug day 🫂", p: "One hug fixes everything 🥰" },
+            { e: "🥺", h: "Something important...", p: "Will you be my Valentine Mayuresh 🥺🥺 forever?<br><br><b>Am all yours _your pooja 🥰</b>", final: true }
+        ];
+
+        const guiltTrips = [
+            { p: "Please think again 🥺🥲<br>Don't say no!! 😭" },
+            { p: "Ek aur bar soch lo 🥹<br>Kyu yesa kr rhe ho 💔" },
+            { p: "Haww myu no kar rahe ho 🥺<br>Bechari mai 🥺😭🙁" },
+            { p: "Last Chance 🙁<br>Mat kari na yar 😭" },
+            { p: "No 😌" }
+        ];
+
+        let currentPage = -1;
+        let guiltIndex = 0;
+
+        function nextPage() {
+            currentPage++;
+            const card = document.getElementById('content');
+            const data = pages[currentPage];
+
+            if (data.final) {
+                renderValentinePage(data.p);
+            } else {
+                card.innerHTML = `
+                    <span class="emoji">${data.e}</span>
+                    <h1>${data.h}</h1>
+                    <p>${data.p}</p>
+                    <div class="btn-container">
+                        <button class="btn" onclick="nextPage()">Next Day ❤️</button>
+                    </div>
+                `;
+            }
+        }
+
+        function renderValentinePage(text) {
+            const card = document.getElementById('content');
+            card.innerHTML = `
+                <span class="emoji">💍</span>
+                <h1>Will you?</h1>
+                <p id="question-text">${text}</p>
+                <div class="btn-container">
+                    <button class="btn" id="yesBtn" onclick="celebrate()">Yes ❤️</button>
+                    <button class="btn btn-no" id="noBtn" onclick="handleNo()">no 🥲</button>
+                </div>
+            `;
+        }
+
+        function handleNo() {
+            const textElement = document.getElementById('question-text');
+            const yesBtn = document.getElementById('yesBtn');
+            
+            if (guiltIndex < guiltTrips.length) {
+                textElement.innerHTML = guiltTrips[guiltIndex].p;
+                // Make the Yes button bigger each time!
+                let currentSize = parseFloat(window.getComputedStyle(yesBtn).fontSize);
+                yesBtn.style.fontSize = (currentSize + 5) + "px";
+                yesBtn.style.padding = (currentSize + 5) + "px " + (currentSize * 2) + "px";
+                
+                guiltIndex++;
+            } else {
+                // If they go through all "No" options, make "No" disappear or run away
+                document.getElementById('noBtn').style.display = 'none';
+            }
+        }
+
+        function celebrate() {
+            const card = document.getElementById('card');
+            card.innerHTML = `
+                <span class="emoji">🎉</span>
+                <h1>Hehe i know you wold sah yes!</h1>
+                <p>Happy Valentine day DEAR!! ❤️❤️❤️</p>
+            `;
+            // Add extra floating hearts
+            for(let i=0; i<20; i++) createHeart();
+        }
+
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.innerHTML = '❤️';
+            heart.style.position = 'fixed';
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.top = '100vh';
+            heart.style.fontSize = (Math.random() * 20 + 10) + 'px';
+            heart.style.opacity = Math.random();
+            heart.style.zIndex = '-1';
+            heart.style.transition = 'transform 5s linear, opacity 5s';
+            document.getElementById('bg').appendChild(heart);
+
+            setTimeout(() => {
+                heart.style.transform = `translateY(-110vh) rotate(${Math.random() * 360}deg)`;
+                heart.style.opacity = '0';
+            }, 100);
+
+            setTimeout(() => heart.remove(), 6000);
+        }
+
+        setInterval(createHeart, 400);
+    </script>
+</body>
+</html>
